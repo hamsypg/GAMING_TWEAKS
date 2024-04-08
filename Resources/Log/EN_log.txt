@@ -1,0 +1,70 @@
+LOG
+
+- Add MAIN MENU & Sub MENUs (REMAKE THE SCRIPT)
+- Add Create Restore Point IMPORTANT 
+- Add No Delaying Mouse and Keyboard 
+- Add DISABLE New Unnecessary Services
+- Add Choose Best DNS P&A (TEST DNS INSIDE)
+- Add REQUIRED FOR LATEST COMPONENT UPDATES
+- Add SG TCP NETWORK OPTIMIZER
+- Add SET GPU Adapter to High
+
+FIX
+
+- Force Choice Languague 
+- Force Choice RAM
+- Force Choice NuberOfLogicalCores
+- Cash Cleaner Errors
+- Temp Cleaner Errors
+
+
+
+SHEMA LOG
+
+- BEFOR MAIN MENU
+      ├─ RESTORE POINT
+      ├─ Choose System Language
+      ├─ Scipt Informations
+      └─ - MAIN MENU
+                ├─ Optimize Windows:
+                │       ├─ Cache, Temporary, logs Cleaner.
+                │       ├─ Disable Automatic App Updates.
+                │       ├─ Disable Automatic Driver Updates.
+                │       ├─ DISABLE or RESTORE Background Apps.
+                │       ├─ DISABLE or RESTORE Unnecessary Services.
+                │       ├─ Disable Spectre and  Meltdown Protection.
+                │       ├─ Disable Transparency Effects.
+                │       ├─ Disable Memory Compression.
+                │       ├─ Prevent Unnecessary Apps From Automatically Starting.
+                │       └─ Optimize Hard Drive.
+                │
+                ├─ Gaming Boost:
+                │       ├─ Disable Game DVR.
+                │       ├─ Disable FSO and Game Bar.
+                │       ├─ Remove Delay.
+                │       ├─ Boost CPU.
+                │       ├─ Boost RAM.
+                │       ├─ Boost GPU.
+                │       ├─ Remove KBM Delay.
+                │       ├─ Optmize Games. (COMING SOON)
+                │       └─ Set Power Config.
+                │
+                ├─ Optimize Network:
+                │       ├─ Clear DNS.
+                │       ├─ Disable Telemetry.
+                │       ├─ Fix Network Laging And Spikes.
+                │       ├─ Stabling Ping.
+                │       ├─ Optimize Network.
+                │       ├─ Optimize TCP.
+                │       └─ Set DNS Server.
+                │
+       	        └─ Latest Components Updates:
+       	        	 ├─ VCRedis Runtimes All-in-One.
+      	        	 ├─ DirectX End-User Runtime.
+      	        	 ├─ Net Framwork Runtime.
+      	        	 ├─ Driver Booster.
+      	        	 ├─ AMD Driver Software.
+      	        	 └─ NVDIA Driver Software.
+                
+
+		
