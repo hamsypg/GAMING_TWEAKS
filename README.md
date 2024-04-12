@@ -3,7 +3,7 @@
 ### GAMING TWEAKS by HAMSYPG beta v0.5
 Boost Your PC with this script
 
-## YOU CAN
+### YOU CAN
 - Make Your Windows Better in Gaming
 - Boost Your CPU and GPU
 - Boost Your RAM
