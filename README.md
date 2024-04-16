@@ -1,4 +1,4 @@
-![GAMING TWEAKS](https://github.com/hamsypg/GAMING_TWEAKS/assets/42080384/d1625b8f-be07-4ab3-8c0b-1b261ea13912)
+![GAMING TWEAKS](https://github.com/hamsypg/GAMING_TWEAKS/assets/42080384/87e58ca1-3496-42ed-bf2c-355c960aefe0)
 
 ## GAMING TWEAKS by HAMSYPG
 Boost Your PC with this script
