@@ -1,3 +1,13 @@
+Version beta-0.5.1
+
+FIX
+
+- Fix Some Bugs
+- Fix Some Errors
+
+
+Version beta-0.5
+
 LOG
 
 - Add MAIN MENU & Sub MENUs (REMAKE THE SCRIPT)
