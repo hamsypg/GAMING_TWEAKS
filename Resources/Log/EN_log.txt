@@ -1,80 +1,70 @@
-Version beta-0.5.1
+# Version beta-0.5.7 (Dual Edition)
 
-FIX
+### CHANGE LOG
 
-- Fix Some Bugs
-- Fix Some Errors
+**[ COMMON CORE FEATURES ]**
+- **Rewritten Core Logic:** Replaced all deprecated `WMIC` commands with `PowerShell` (Full Windows 11 24H2 Support).
+- **Smart Hardware Detection:**
+    - Auto-Detect RAM Size (Logic calculates bytes to GB automatically).
+    - Auto-Detect CPU Logical Cores (No manual input required).
+- **Native Multi-Language Support:**
+    - Separated Core scripts into `Core_EN` and `Core_FR`.
+    - Implemented UTF-8 Encoding to fix special character display errors.
+- **Silent System Protection:** Automatically creates a Restore Point in the background using PowerShell execution policies.
 
+**[ EDITION SPECIFIC: CLOUD ]**
+- **Lightweight Architecture:** Single executable batch file (Launcher).
+- **GitHub Integration:** Fetches the latest Core Scripts directly from the repository.
+- **On-Demand Resources:** Downloads external tools (MSI Utility, TCP Optimizer) to `%TEMP%` only when requested via `curl`.
 
-Version beta-0.5
+**[ EDITION SPECIFIC: LOCAL ]**
+- **Offline Stability:** Fully functional without an internet connection.
+- **Structured Resources:** Organized file hierarchy (`\Resources\Lang`, `\Resources\Tools`).
 
-LOG
-
-- Add MAIN MENU & Sub MENUs (REMAKE THE SCRIPT)
-- Add Create Restore Point IMPORTANT 
-- Add No Delaying Mouse and Keyboard 
-- Add DISABLE New Unnecessary Services
-- Add Choose Best DNS P&A (TEST DNS INSIDE)
-- Add REQUIRED FOR LATEST COMPONENT UPDATES
-- Add SG TCP NETWORK OPTIMIZER
-- Add SET GPU Adapter to High
-
-FIX
-
-- Force Choice Languague 
-- Force Choice RAM
-- Force Choice NuberOfLogicalCores
-- Cash Cleaner Errors
-- Temp Cleaner Errors
-
+**[ FIXES ]**
+- **FIXED:** "Command not found" errors related to WMIC removal in newer Windows builds.
+- **FIXED:** Language Parsing bugs (Script now reads System Values instead of Localized Text strings).
+- **FIXED:** Relative Path issues; script now functions correctly from any directory (USB/Desktop).
 
 
-SHEMA LOG
 
-- BEFOR MAIN MENU
-      ├─ RESTORE POINT
-      ├─ Choose System Language
-      ├─ Scipt Informations
-      └─ - MAIN MENU
-                ├─ Optimize Windows:
-                │       ├─ Cache, Temporary, logs Cleaner.
-                │       ├─ Disable Automatic App Updates.
-                │       ├─ Disable Automatic Driver Updates.
-                │       ├─ DISABLE or RESTORE Background Apps.
-                │       ├─ DISABLE or RESTORE Unnecessary Services.
-                │       ├─ Disable Spectre and  Meltdown Protection.
-                │       ├─ Disable Transparency Effects.
-                │       ├─ Disable Memory Compression.
-                │       ├─ Prevent Unnecessary Apps From Automatically Starting.
-                │       └─ Optimize Hard Drive.
-                │
-                ├─ Gaming Boost:
-                │       ├─ Disable Game DVR.
-                │       ├─ Disable FSO and Game Bar.
-                │       ├─ Remove Delay.
-                │       ├─ Boost CPU.
-                │       ├─ Boost RAM.
-                │       ├─ Boost GPU.
-                │       ├─ Remove KBM Delay.
-                │       ├─ Optmize Games. (COMING SOON)
-                │       └─ Set Power Config.
-                │
-                ├─ Optimize Network:
-                │       ├─ Clear DNS.
-                │       ├─ Disable Telemetry.
-                │       ├─ Fix Network Laging And Spikes.
-                │       ├─ Stabling Ping.
-                │       ├─ Optimize Network.
-                │       ├─ Optimize TCP.
-                │       └─ Set DNS Server.
-                │
-       	        └─ Latest Components Updates:
-       	        	 ├─ VCRedis Runtimes All-in-One.
-      	        	 ├─ DirectX End-User Runtime.
-      	        	 ├─ Net Framwork Runtime.
-      	        	 ├─ Driver Booster.
-      	        	 ├─ AMD Driver Software.
-      	        	 └─ NVDIA Driver Software.
-                
+### ARCHITECTURE SCHEMA
 
-		
+
+GAMING TWEAKS v0.5.7 (Launcher)
+│
+├── [ INITIALIZATION ]
+│     ├─ Administrator Rights Check
+│     ├─ Connectivity Check (Cloud Edition Only)
+│     ├─ Language Selection (EN / FR)
+│     └─ Automatic Restore Point (PowerShell)
+│
+├── [ EDITION BRANCHING ]
+│     │
+│     ├── CLOUD MODE (Online)
+│     │      ├─ FETCH: Core Script from GitHub -> %TEMP%
+│     │      ├─ FETCH: Tools (On-Demand) from GitHub -> %TEMP%
+│     │      └─ EXECUTE: Run from Temporary Directory
+│     │
+│     └── LOCAL MODE (Offline)
+│            ├─ LOAD: Core Script from .\Resources\Lang\
+│            ├─ ACCESS: Tools directly from .\Resources\
+│            └─ EXECUTE: Run from Local Directory
+│
+└── [ UNIFIED MAIN MENU ]
+          │
+          ├─ Optimize Windows
+          │       ├─ Smart Cleaner (Silent / Auto-Skip Errors)
+          │       ├─ Registry Tweaks (Apps/Drivers/Spectre)
+          │       └─ Service Management (PowerShell Logic)
+          │
+          ├─ Gaming Boost
+          │       ├─ Smart RAM Boost (Auto-Threshold Calculation)
+          │       ├─ Smart CPU Boost (Auto-Core Count & Priority)
+          │       ├─ GPU Optimization (MSI Utility)
+          │       └─ Input Latency Fix (FilterKeys)
+          │
+          └─ Optimize Network
+                  ├─ TCP Optimization (External Tool)
+                  ├─ DNS Cache Flush
+                  └─ Anti-Spike Firewall Rules
