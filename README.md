@@ -12,7 +12,6 @@
     <img src="https://img.shields.io/github/v/release/hamsypg/GAMING_TWEAKS?style=for-the-badge&color=blueviolet" alt="Version">
     <img src="https://img.shields.io/github/repo-size/hamsypg/GAMING_TWEAKS?style=for-the-badge&color=red" alt="Size">
     <img src="https://img.shields.io/badge/Platform-Windows%2010%20%7C%2011-blue?style=for-the-badge&logo=windows" alt="Platform">
-    <img src="https://img.shields.io/github/license/hamsypg/GAMING_TWEAKS?style=for-the-badge&color=success" alt="License">
   </p>
 
   <p>
