@@ -1,97 +1,76 @@
 @echo off
 setlocal EnableDelayedExpansion
-title GAMING TWEAKS Cloud Console (v0.6.0)
+title GAMING TWEAKS Launcher (beta 0.6.0)
 color b
 
 :: ==========================================
-:: 1. INITIALIZATION & CHECKS
+:: 1. SETUP PATHS (إعداد المسارات)
 :: ==========================================
+:: أهم سطر: كيخلي السكريبت يعرف بلي راه وسط المجلد المؤقت
 cd /d "%~dp0"
 
-:: التحقق من Admin (سريع وخفيف لأن الـ Loader قام بالمهمة)
-fsutil dirty query %systemdrive% >nul 2>&1
-if %errorLevel% NEQ 0 (
-    color c
+:: التحقق من وجود ملفات اللغة
+if not exist "Resources\Lang" (
     cls
-    echo.
-    echo [ERROR] Administrator privileges required!
-    echo Please run the Cloud Loader as Administrator.
-    pause
-    exit
-)
-
-:: تعريف المسارات
-set "ROOT=%~dp0"
-set "RES=%ROOT%Resources"
-set "LANG_DIR=%RES%\Lang"
-
-:: التحقق من أن الملفات تحملات بشكل صحيح
-if not exist "%LANG_DIR%" (
     color c
-    cls
     echo.
-    echo [FATAL ERROR] Cloud Resources Incomplete!
-    echo The downloaded package seems corrupted or empty.
-    echo Path searched: %LANG_DIR%
+    echo [ERROR] Resources folder missing!
+    echo Current Path: %CD%
     pause
     exit
 )
 
 :: ==========================================
-:: 2. CLOUD DASHBOARD
+:: 2. MENU (القائمة)
 :: ==========================================
 :LangMenu
 cls
-color b
 echo.
 echo    ===============================================
-echo       GAMING TWEAKS CLOUD (v0.6.0) - Connected
-echo    ===============================================
-echo    Status: Online | Session: Temporary
+echo       GAMING TWEAKS Cloud (beta 0.6.0)
 echo    ===============================================
 echo.
-echo    [1] English (Global)
-echo    [2] Francais (Europe/Afrique)
+echo    [1] English
+echo    [2] Francais
 echo.
-echo    [X] Close Session
+echo    [X] Exit
 echo.
-set /p "lang_choice=Command : "
+set /p "lang_choice=Choice: "
 
 if /i "%lang_choice%"=="X" exit
-if "%lang_choice%"=="1" set "TARGET_SCRIPT=Core_EN.bat" & goto CloudInit
-if "%lang_choice%"=="2" set "TARGET_SCRIPT=Core_FR.bat" & goto CloudInit
+
+:: هنا كان المشكل، دابا مصلح باستعمال الأقواس
+if "%lang_choice%"=="1" (
+    set "TARGET_SCRIPT=Core_EN.bat"
+    goto RunScript
+)
+
+if "%lang_choice%"=="2" (
+    set "TARGET_SCRIPT=Core_FR.bat"
+    goto RunScript
+)
+
+:: إلا كتب شي حاجة غالطة يرجع
 goto LangMenu
 
 :: ==========================================
-:: 3. SAFEGUARD & LAUNCH
+:: 3. EXECUTE (التشغيل)
 :: ==========================================
-:CloudInit
+:RunScript
 cls
 echo.
-echo    [CLOUD SYNC] Initializing Environment...
+echo    [CLOUD] Initializing beta 0.6.0...
 
-:: نقطة استعادة النظام (ضرورية للأمان)
-if "%lang_choice%"=="1" echo    [SAFETY] Creating System Restore Point...
-if "%lang_choice%"=="2" echo    [SECURITE] Creation du point de restauration...
+:: نقطة استعادة النظام
+powershell -NoProfile -ExecutionPolicy Bypass -Command "Checkpoint-Computer -Description 'GT beta 0.6.0 Cloud' -RestorePointType 'MODIFY_SETTINGS' -ErrorAction SilentlyContinue"
 
-powershell -NoProfile -ExecutionPolicy Bypass -Command "try { Checkpoint-Computer -Description 'GT Cloud v0.6.0 Pre-Tweak' -RestorePointType 'MODIFY_SETTINGS' -ErrorAction Stop } catch { exit 1 }" >nul 2>&1
-
-:: ==========================================
-:: 4. EXECUTE CORE ENGINE
-:: ==========================================
-if exist "%LANG_DIR%\%TARGET_SCRIPT%" (
-    cls
-    :: تشغيل الكود الأساسي
-    call "%LANG_DIR%\%TARGET_SCRIPT%"
+:: تشغيل السكريبت النهائي
+if exist "Resources\Lang\%TARGET_SCRIPT%" (
+    call "Resources\Lang\%TARGET_SCRIPT%"
 ) else (
-    cls
     color c
     echo.
-    echo [ERROR] Core Script Not Found!
-    echo Target: %TARGET_SCRIPT%
+    echo [ERROR] Script not found: Resources\Lang\%TARGET_SCRIPT%
     pause
-    exit
 )
-
-:: النهاية (التحكم كيرجع للـ Loader باش يمسح)
 exit
