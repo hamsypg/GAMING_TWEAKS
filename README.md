@@ -15,7 +15,7 @@
   </p>
 
   <p>
-    <a href="https://github.com/hamsypg/GAMING_TWEAKS/releases/download/beta-0.5.7/GAMING.TWEAKS.by.HAMSYPG.beta.v0.5.7.rar">
+    <a href="https://github.com/hamsypg/GAMING_TWEAKS/releases/latest/download/GAMING.TWEAKS.by.HAMSYPG.beta.v0.5.7.rar">
       <img src="https://img.shields.io/badge/DOWNLOAD%20NOW-Click%20Here-success?style=for-the-badge&logo=windows&logoColor=white" alt="Download">
     </a>
   </p>
