@@ -17,6 +17,7 @@ echo             [2] Boost Jeux (Gaming)
 echo             [3] Optimiser Reseau (Network)
 echo             [4] Mises a jour composants
 echo.
+echo             [R] Restaurer les parametres par defaut de Windows
 echo             [L] Voir le Journal (Log)
 echo             [F] Me Suivre
 echo             [X] Quitter
@@ -24,6 +25,7 @@ echo             ----------------------------------------
 echo.
 set /p "frmain=Votre choix : "
 
+if /i "%frmain%"=="R" goto restoredefaults
 if /i "%frmain%"=="L" goto frlog
 if /i "%frmain%"=="F" goto followme
 if /i "%frmain%"=="X" exit
@@ -302,6 +304,29 @@ if "%c%"=="1" start "" "https://www.techpowerup.com/download/visual-c-redistribu
 if "%c%"=="2" start "" "https://www.microsoft.com/en-us/download/details.aspx?id=35"
 if /i "%c%"=="B" goto frmain
 goto componetsupdate
+
+:restoredefaults
+cls
+color e
+echo.
+echo             Restaurer les parametres par defaut de Windows
+echo             ----------------------------------------------------------
+echo             Remet la valeur par defaut de Windows pour chaque tweak
+echo             de cet outil : registre, services, plans d'alimentation,
+echo             reseau, demarrage, regle pare-feu et compression memoire.
+echo             Les plans d'alimentation reviennent a ceux de Windows.
+echo             ----------------------------------------------------------
+echo.
+set /p "rd=Continuer ? (O/N) : "
+if /i not "%rd%"=="O" (
+    color b
+    goto frmain
+)
+powershell -NoProfile -ExecutionPolicy Bypass -File "%~dp0..\Restore\GT_Restore.ps1" -Lang FR
+echo.
+pause
+color b
+goto frmain
 
 :frlog
 :: تأكد من وجود ملف Log خاص بالفرنسية أو استعمل الإنجليزي
