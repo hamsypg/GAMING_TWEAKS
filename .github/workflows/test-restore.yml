@@ -18,6 +18,13 @@ jobs:
           $errors
           if ($errors.Count) { exit 1 }
 
+      - name: Fresh Windows values (before any tweak)
+        shell: powershell
+        run: |
+          [System.Environment]::OSVersion.VersionString
+          (Get-CimInstance Win32_OperatingSystem).Caption
+          .\.github\tests\verify_defaults.ps1; exit 0
+
       - name: Apply all tweaks
         shell: cmd
         run: call .github\tests\apply_tweaks.bat
