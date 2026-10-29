@@ -1,0 +1,81 @@
+name: Test Restore Windows Defaults
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  restore:
+    runs-on: windows-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check PowerShell syntax
+        shell: powershell
+        run: |
+          $errors = $null
+          [System.Management.Automation.Language.Parser]::ParseFile("$PWD\Resources\Restore\GT_Restore.ps1", [ref]$null, [ref]$errors) | Out-Null
+          $errors
+          if ($errors.Count) { exit 1 }
+
+      - name: Fresh Windows values (before any tweak)
+        shell: powershell
+        run: |
+          (Get-CimInstance Win32_OperatingSystem).Caption
+          .\.github\tests\verify_defaults.ps1; exit 0
+
+      - name: Start the Launcher (saves the PC backup), then exit
+        shell: cmd
+        timeout-minutes: 5
+        run: |
+          (echo 1& echo X)> "%RUNNER_TEMP%\in.txt"
+          cmd /c Launcher.bat < "%RUNNER_TEMP%\in.txt"
+          exit /b 0
+
+      - name: Show the PC backup
+        shell: powershell
+        run: Get-Content "$env:ProgramData\GamingTweaks\pc_backup.json"
+
+      - name: Apply all tweaks
+        shell: cmd
+        timeout-minutes: 5
+        run: call .github\tests\apply_tweaks.bat
+
+      - name: Show tweaked state
+        shell: powershell
+        run: .\.github\tests\verify_defaults.ps1; exit 0
+
+      - name: "English menu: [R] > [0] 000 > Y"
+        shell: cmd
+        timeout-minutes: 5
+        run: |
+          (echo R& echo 0& echo Y& echo.& echo X)> "%RUNNER_TEMP%\in.txt"
+          cmd /c Resources\Lang\Core_EN.bat < "%RUNNER_TEMP%\in.txt"
+          exit /b 0
+
+      - name: Check Enable-MMAgent works (memory compression)
+        shell: powershell
+        run: |
+          Enable-MMAgent -MemoryCompression -ErrorAction Stop
+          'Enable-MMAgent -MemoryCompression: OK'
+
+      - name: Verify fresh Windows defaults (000)
+        shell: powershell
+        run: .\.github\tests\verify_defaults.ps1
+
+      - name: Apply all tweaks again
+        shell: cmd
+        timeout-minutes: 5
+        run: call .github\tests\apply_tweaks.bat >nul
+
+      - name: "Restore my PC backup (French messages)"
+        shell: cmd
+        timeout-minutes: 5
+        run: powershell -NoProfile -ExecutionPolicy Bypass -File Resources\Restore\GT_Restore.ps1 -Mode PCBackup -Lang FR <nul
+
+      - name: Verify the PC is back to its backup
+        shell: powershell
+        run: |
+          powershell -NoProfile -ExecutionPolicy Bypass -File Resources\Restore\GT_Restore.ps1 -Mode Backup -BackupFile "$env:RUNNER_TEMP\after.json"
+          .\.github\tests\compare_backup.ps1 -Before "$env:ProgramData\GamingTweaks\pc_backup.json" -After "$env:RUNNER_TEMP\after.json"

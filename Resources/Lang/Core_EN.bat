@@ -1,5 +1,5 @@
 @echo off
-title GAMING TWEAKS v0.5.7 (English)
+title GAMING TWEAKS beta 0.6.0 (English)
 cls
 color b
 
@@ -15,6 +15,7 @@ echo             [2] Gaming Boost
 echo             [3] Optimize Network
 echo             [4] Latest Components Updates
 echo.
+echo             [R] Restore Windows Defaults
 echo             [L] View Log
 echo             [F] Follow Me
 echo             [X] Exit
@@ -22,6 +23,7 @@ echo             ----------------------------------------
 echo.
 set /p "enmain=Write Here: "
 
+if /i "%enmain%"=="R" goto restoredefaults
 if /i "%enmain%"=="L" goto enlog
 if /i "%enmain%"=="F" goto followme
 if /i "%enmain%"=="X" exit
@@ -309,6 +311,40 @@ if "%c%"=="1" start "" "https://www.techpowerup.com/download/visual-c-redistribu
 if "%c%"=="2" start "" "https://www.microsoft.com/en-us/download/details.aspx?id=35"
 if /i "%c%"=="B" goto enmain
 goto componetsupdate
+
+:restoredefaults
+cls
+color e
+echo.
+echo             Restore Windows Defaults
+echo             ----------------------------------------------------------
+echo             Undo every tweak of this tool: registry, services, power
+echo             plans, network, boot options, firewall rule and memory
+echo             compression.
+echo.
+echo             [0] 000 - Fresh Windows defaults
+echo             [1] My PC backup (values before the first tweak)
+echo             [B] Back
+echo             ----------------------------------------------------------
+echo.
+set /p "rdm=Choice: "
+set "rdmode="
+if "%rdm%"=="0" set "rdmode=Defaults"
+if "%rdm%"=="1" set "rdmode=PCBackup"
+if not defined rdmode (
+    color b
+    goto enmain
+)
+set /p "rd=Continue? (Y/N): "
+if /i not "%rd%"=="Y" (
+    color b
+    goto enmain
+)
+powershell -NoProfile -ExecutionPolicy Bypass -File "%~dp0..\Restore\GT_Restore.ps1" -Mode %rdmode% -Lang EN <nul
+echo.
+pause
+color b
+goto enmain
 
 :enlog
 if exist "%RES%\Log\EN_log.txt" start "" "%RES%\Log\EN_log.txt"

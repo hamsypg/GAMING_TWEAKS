@@ -1,7 +1,7 @@
 @echo off
 :: دعم الحروف الفرنسية
 chcp 65001 >nul
-title GAMING TWEAKS v0.5.7 (Francais)
+title GAMING TWEAKS beta 0.6.0 (Francais)
 cls
 color b
 
@@ -17,6 +17,7 @@ echo             [2] Boost Jeux (Gaming)
 echo             [3] Optimiser Reseau (Network)
 echo             [4] Mises a jour composants
 echo.
+echo             [R] Restaurer les parametres par defaut de Windows
 echo             [L] Voir le Journal (Log)
 echo             [F] Me Suivre
 echo             [X] Quitter
@@ -24,6 +25,7 @@ echo             ----------------------------------------
 echo.
 set /p "frmain=Votre choix : "
 
+if /i "%frmain%"=="R" goto restoredefaults
 if /i "%frmain%"=="L" goto frlog
 if /i "%frmain%"=="F" goto followme
 if /i "%frmain%"=="X" exit
@@ -302,6 +304,40 @@ if "%c%"=="1" start "" "https://www.techpowerup.com/download/visual-c-redistribu
 if "%c%"=="2" start "" "https://www.microsoft.com/en-us/download/details.aspx?id=35"
 if /i "%c%"=="B" goto frmain
 goto componetsupdate
+
+:restoredefaults
+cls
+color e
+echo.
+echo             Restaurer les parametres par defaut de Windows
+echo             ----------------------------------------------------------
+echo             Annule chaque tweak de cet outil : registre, services,
+echo             plans d'alimentation, reseau, demarrage, regle pare-feu
+echo             et compression memoire.
+echo.
+echo             [0] 000 - Valeurs par defaut d'un Windows neuf
+echo             [1] Sauvegarde de mon PC (avant le premier tweak)
+echo             [B] Retour
+echo             ----------------------------------------------------------
+echo.
+set /p "rdm=Choix : "
+set "rdmode="
+if "%rdm%"=="0" set "rdmode=Defaults"
+if "%rdm%"=="1" set "rdmode=PCBackup"
+if not defined rdmode (
+    color b
+    goto frmain
+)
+set /p "rd=Continuer ? (O/N) : "
+if /i not "%rd%"=="O" (
+    color b
+    goto frmain
+)
+powershell -NoProfile -ExecutionPolicy Bypass -File "%~dp0..\Restore\GT_Restore.ps1" -Mode %rdmode% -Lang FR <nul
+echo.
+pause
+color b
+goto frmain
 
 :frlog
 :: تأكد من وجود ملف Log خاص بالفرنسية أو استعمل الإنجليزي
