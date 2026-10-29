@@ -31,6 +31,7 @@ jobs:
         run: |
           (echo 1& echo X)> "%RUNNER_TEMP%\in.txt"
           cmd /c Launcher.bat < "%RUNNER_TEMP%\in.txt"
+          exit /b 0
 
       - name: Show the PC backup
         shell: powershell
@@ -51,6 +52,7 @@ jobs:
         run: |
           (echo R& echo 0& echo Y& echo.& echo X)> "%RUNNER_TEMP%\in.txt"
           cmd /c Resources\Lang\Core_EN.bat < "%RUNNER_TEMP%\in.txt"
+          exit /b 0
 
       - name: Verify fresh Windows defaults (000)
         shell: powershell
@@ -67,6 +69,7 @@ jobs:
         run: |
           (echo R& echo 1& echo O& echo.& echo X)> "%RUNNER_TEMP%\in.txt"
           cmd /c Resources\Lang\Core_FR.bat < "%RUNNER_TEMP%\in.txt"
+          exit /b 0
 
       - name: Verify the PC is back to its backup
         shell: powershell

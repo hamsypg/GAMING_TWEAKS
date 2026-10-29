@@ -83,7 +83,7 @@ $Reg = @(
     @{ Path = "$MM\Tasks\Games"; Name = 'GPU Priority'; Type = 'DWord'; Default = 8 }
     @{ Path = 'HKLM:\SYSTEM\ControlSet001\Control'; Name = 'SvcHostSplitThresholdInKB'; Type = 'DWord'; Default = 3670016 }
     @{ Path = 'HKLM:\SYSTEM\CurrentControlSet\Control'; Name = 'SvcHostSplitThresholdInKB'; Type = 'DWord'; Default = 3670016 }
-    @{ Path = 'HKLM:\SOFTWARE\Microsoft\Input\Settings\ControllerProcessor\CursorSpeed'; Name = 'CursorSensitivity'; Type = 'DWord'; Default = $null }
+    @{ Path = 'HKLM:\SOFTWARE\Microsoft\Input\Settings\ControllerProcessor\CursorSpeed'; Name = 'CursorSensitivity'; Type = 'DWord'; Default = 100 }
     # Gaming Boost [3] System Properties > Performance (visual effects, processor scheduling)
     @{ Path = 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\VisualEffects'; Name = 'VisualFXSetting'; Type = 'DWord'; Default = 0 }
     @{ Path = $Desktop; Name = 'UserPreferencesMask'; Type = 'Binary'; Default = [byte[]](0x9E, 0x1E, 0x07, 0x80, 0x12, 0x00, 0x00, 0x00) }

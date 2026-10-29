@@ -20,7 +20,7 @@ Check 'NetworkThrottlingIndex'  (Reg $mm 'NetworkThrottlingIndex') 10
 Check 'SystemResponsiveness'    (Reg $mm 'SystemResponsiveness') 20
 Check 'GPU Priority'            (Reg "$mm\Tasks\Games" 'GPU Priority') 8
 Check 'SvcHostSplitThresholdInKB' (Reg 'HKLM:\SYSTEM\ControlSet001\Control' 'SvcHostSplitThresholdInKB') 3670016
-Check 'CursorSensitivity'       (Reg 'HKLM:\SOFTWARE\Microsoft\Input\Settings\ControllerProcessor\CursorSpeed' 'CursorSensitivity') ''
+Check 'CursorSensitivity'       (Reg 'HKLM:\SOFTWARE\Microsoft\Input\Settings\ControllerProcessor\CursorSpeed' 'CursorSensitivity') 100
 Check 'Win32PrioritySeparation' (Reg 'HKLM:\SYSTEM\CurrentControlSet\Control\PriorityControl' 'Win32PrioritySeparation') 2
 Check 'DefaultTTL'              (Reg 'HKLM:\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters' 'DefaultTTL') ''
 Check 'DiagTrack start'         (Svc 'DiagTrack') 2
