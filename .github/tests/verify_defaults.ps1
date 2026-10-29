@@ -27,7 +27,8 @@ Check 'DiagTrack start'         (Svc 'DiagTrack') 2
 Check 'SysMain start'           (Svc 'SysMain') 2
 Check 'MapsBroker start'        (Svc 'MapsBroker') 2
 Check 'MapsBroker delayed'      (Reg 'HKLM:\SYSTEM\CurrentControlSet\Services\MapsBroker' 'DelayedAutostart') 1
-Check 'Memory compression'      ((Get-MMAgent).MemoryCompression) 'True'
+# Memory compression only changes state after a reboot, which CI can't do: shown, not counted
+'INFO   {0,-45} actual={1,-12} expected=True (after reboot)' -f 'Memory compression', (Get-MMAgent).MemoryCompression
 Check 'bcdedit numproc'         ([bool]((bcdedit /enum '{current}') -match '^\s*numproc')) 'False'
 Check 'Active power plan'       ([bool]((powercfg /getactivescheme) -match '381b4222-f694-41f0-9685-ff5bb260df2e')) 'True'
 Check 'Ultimate copies left'    (@(powercfg /list | Where-Object { $_ -match 'Ultimate' }).Count) 0

@@ -54,6 +54,12 @@ jobs:
           cmd /c Resources\Lang\Core_EN.bat < "%RUNNER_TEMP%\in.txt"
           exit /b 0
 
+      - name: Check Enable-MMAgent works (memory compression)
+        shell: powershell
+        run: |
+          Enable-MMAgent -MemoryCompression -ErrorAction Stop
+          'Enable-MMAgent -MemoryCompression: OK'
+
       - name: Verify fresh Windows defaults (000)
         shell: powershell
         run: .\.github\tests\verify_defaults.ps1
