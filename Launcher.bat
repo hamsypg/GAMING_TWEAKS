@@ -65,7 +65,7 @@ echo    [CLOUD] Initializing beta 0.6.0...
 powershell -NoProfile -ExecutionPolicy Bypass -File "Resources\Restore\GT_Restore.ps1" -Mode Backup <nul
 
 :: نقطة استعادة النظام
-powershell -NoProfile -ExecutionPolicy Bypass -Command "Checkpoint-Computer -Description 'GT beta 0.6.0 Cloud' -RestorePointType 'MODIFY_SETTINGS' -ErrorAction SilentlyContinue"
+powershell -NoProfile -ExecutionPolicy Bypass -Command "Checkpoint-Computer -Description 'GT beta 0.6.0 Cloud' -RestorePointType 'MODIFY_SETTINGS' -ErrorAction SilentlyContinue" <nul
 
 :: تشغيل السكريبت النهائي
 if exist "Resources\Lang\%TARGET_SCRIPT%" (
