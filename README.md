@@ -54,7 +54,9 @@
 
 ## ⚠️ Disclaimer
 > This tool modifies Windows Registry and System Services. A **System Restore Point** is created automatically before applying any tweaks. Use at your own risk.
-> To undo the tweaks, choose **[R] Restore Windows Defaults** in the main menu: it puts every setting the tool changes back to the Windows default (no backup needed), then restart your PC.
+> To undo the tweaks, choose **[R] Restore Windows Defaults** in the main menu, then restart your PC:
+> - **[0] 000**: puts every setting the tool changes back to the fresh Windows default (no backup needed).
+> - **[1] My PC backup**: puts back this PC's own values, saved automatically before the first tweak.
 
 <br>
 

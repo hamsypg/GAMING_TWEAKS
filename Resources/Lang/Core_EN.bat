@@ -318,18 +318,29 @@ color e
 echo.
 echo             Restore Windows Defaults
 echo             ----------------------------------------------------------
-echo             This puts back the Windows default value of every tweak
-echo             in this tool: registry, services, power plans, network,
-echo             boot options, firewall rule and memory compression.
-echo             Power plans are reset to the Windows plans (Balanced).
+echo             Undo every tweak of this tool: registry, services, power
+echo             plans, network, boot options, firewall rule and memory
+echo             compression.
+echo.
+echo             [0] 000 - Fresh Windows defaults
+echo             [1] My PC backup (values before the first tweak)
+echo             [B] Back
 echo             ----------------------------------------------------------
 echo.
+set /p "rdm=Choice: "
+set "rdmode="
+if "%rdm%"=="0" set "rdmode=Defaults"
+if "%rdm%"=="1" set "rdmode=PCBackup"
+if not defined rdmode (
+    color b
+    goto enmain
+)
 set /p "rd=Continue? (Y/N): "
 if /i not "%rd%"=="Y" (
     color b
     goto enmain
 )
-powershell -NoProfile -ExecutionPolicy Bypass -File "%~dp0..\Restore\GT_Restore.ps1" -Lang EN
+powershell -NoProfile -ExecutionPolicy Bypass -File "%~dp0..\Restore\GT_Restore.ps1" -Mode %rdmode% -Lang EN <nul
 echo.
 pause
 color b

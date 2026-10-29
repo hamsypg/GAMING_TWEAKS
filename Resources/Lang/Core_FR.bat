@@ -311,18 +311,29 @@ color e
 echo.
 echo             Restaurer les parametres par defaut de Windows
 echo             ----------------------------------------------------------
-echo             Remet la valeur par defaut de Windows pour chaque tweak
-echo             de cet outil : registre, services, plans d'alimentation,
-echo             reseau, demarrage, regle pare-feu et compression memoire.
-echo             Les plans d'alimentation reviennent a ceux de Windows.
+echo             Annule chaque tweak de cet outil : registre, services,
+echo             plans d'alimentation, reseau, demarrage, regle pare-feu
+echo             et compression memoire.
+echo.
+echo             [0] 000 - Valeurs par defaut d'un Windows neuf
+echo             [1] Sauvegarde de mon PC (avant le premier tweak)
+echo             [B] Retour
 echo             ----------------------------------------------------------
 echo.
+set /p "rdm=Choix : "
+set "rdmode="
+if "%rdm%"=="0" set "rdmode=Defaults"
+if "%rdm%"=="1" set "rdmode=PCBackup"
+if not defined rdmode (
+    color b
+    goto frmain
+)
 set /p "rd=Continuer ? (O/N) : "
 if /i not "%rd%"=="O" (
     color b
     goto frmain
 )
-powershell -NoProfile -ExecutionPolicy Bypass -File "%~dp0..\Restore\GT_Restore.ps1" -Lang FR
+powershell -NoProfile -ExecutionPolicy Bypass -File "%~dp0..\Restore\GT_Restore.ps1" -Mode %rdmode% -Lang FR <nul
 echo.
 pause
 color b

@@ -61,6 +61,9 @@ cls
 echo.
 echo    [CLOUD] Initializing beta 0.6.0...
 
+:: Backup ديال القيم الأصلية ديال البيسي (كيتدار غير أول مرة)
+powershell -NoProfile -ExecutionPolicy Bypass -File "Resources\Restore\GT_Restore.ps1" -Mode Backup <nul
+
 :: نقطة استعادة النظام
 powershell -NoProfile -ExecutionPolicy Bypass -Command "Checkpoint-Computer -Description 'GT beta 0.6.0 Cloud' -RestorePointType 'MODIFY_SETTINGS' -ErrorAction SilentlyContinue"
 
