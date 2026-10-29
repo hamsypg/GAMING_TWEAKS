@@ -23,7 +23,7 @@ $T = @{
         Use000   = 'Restoring 000: fresh Windows default values'
         UsePC    = 'Restoring your PC backup from'
         NoPC     = 'No PC backup found: using the fresh Windows defaults (000) instead'
-        Registry = 'Registry (Windows, Gaming, Delay, CPU, RAM, Mouse, Keyboard, Visual effects, TCP)'
+        Registry = 'Registry (Windows, Gaming, Frame Booster, Delay, CPU, RAM, Mouse, Keyboard, Visual effects, TCP)'
         Services = 'Services (DiagTrack, SysMain, MapsBroker)'
         MemComp  = 'Memory Compression'
         Boot     = 'Boot options (CPU cores)'
@@ -38,7 +38,7 @@ $T = @{
         Use000   = 'Restauration 000 : valeurs par defaut d''un Windows neuf'
         UsePC    = 'Restauration de la sauvegarde du PC du'
         NoPC     = 'Pas de sauvegarde du PC : utilisation des valeurs Windows par defaut (000)'
-        Registry = 'Registre (Windows, Jeux, Delai, CPU, RAM, Souris, Clavier, Effets visuels, TCP)'
+        Registry = 'Registre (Windows, Jeux, Frame Booster, Delai, CPU, RAM, Souris, Clavier, Effets visuels, TCP)'
         Services = 'Services (DiagTrack, SysMain, MapsBroker)'
         MemComp  = 'Compression memoire'
         Boot     = 'Options de demarrage (coeurs CPU)'
@@ -59,6 +59,7 @@ if (-not $isAdmin) {
 # ------------------------------------------
 # Every registry value GAMING TWEAKS changes, with its fresh Windows default.
 # Default $null = the value does not exist on a fresh Windows install.
+# Dynamic = one entry per network card / PCI device found on this PC.
 # ------------------------------------------
 $MM       = 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile'
 $Desktop  = 'HKCU:\Control Panel\Desktop'
@@ -66,24 +67,47 @@ $Advanced = 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced'
 $KeyResp  = 'HKCU:\Control Panel\Accessibility\Keyboard Response'
 $Tcp      = 'HKLM:\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters'
 $SvcProv  = 'HKLM:\SYSTEM\CurrentControlSet\Services\Tcpip\ServiceProvider'
+$GameCfg  = 'HKCU:\System\GameConfigStore'
+$Mouse    = 'HKCU:\Control Panel\Mouse'
 $Reg = @(
-    # Optimize Windows [2] [3] [4] [6] [7] [9]
+    # Optimize Windows [2] [3] [4] [6] [7] (NoAutoUpdate: set by versions before beta 0.7.0)
     @{ Path = 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU'; Name = 'NoAutoUpdate'; Type = 'DWord'; Default = $null }
+    @{ Path = 'HKLM:\SOFTWARE\Policies\Microsoft\WindowsStore'; Name = 'AutoDownload'; Type = 'DWord'; Default = $null }
     @{ Path = 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\DriverSearching'; Name = 'SearchOrderConfig'; Type = 'DWord'; Default = 1 }
     @{ Path = 'HKCU:\Software\Microsoft\Windows\CurrentVersion\BackgroundAccessApplications'; Name = 'GlobalUserDisabled'; Type = 'DWord'; Default = $null }
     @{ Path = 'HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management'; Name = 'FeatureSettingsOverride'; Type = 'DWord'; Default = $null }
+    @{ Path = 'HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management'; Name = 'FeatureSettingsOverrideMask'; Type = 'DWord'; Default = $null }
     @{ Path = 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize'; Name = 'EnableTransparency'; Type = 'DWord'; Default = 1 }
-    # Gaming Boost [1] [2] Game DVR / FSO
-    @{ Path = 'HKCU:\System\GameConfigStore'; Name = 'GameDVR_Enabled'; Type = 'DWord'; Default = 1 }
-    @{ Path = 'HKCU:\System\GameConfigStore'; Name = 'GameDVR_FSEBehaviorMode'; Type = 'DWord'; Default = 1 }
-    @{ Path = 'HKCU:\System\GameConfigStore'; Name = 'GameDVR_DXGIHonorFSEWindowsCompatible'; Type = 'DWord'; Default = 0 }
-    # Gaming Boost [3] Remove Windows Delay, [4] CPU, [5] RAM (0x380000), [7] Mouse
+    # Gaming Boost [1] [2] Game DVR / FSO / Game Bar, Frame Booster
+    @{ Path = $GameCfg; Name = 'GameDVR_Enabled'; Type = 'DWord'; Default = 1 }
+    @{ Path = $GameCfg; Name = 'GameDVR_FSEBehaviorMode'; Type = 'DWord'; Default = 1 }
+    @{ Path = $GameCfg; Name = 'GameDVR_FSEBehavior'; Type = 'DWord'; Default = $null }
+    @{ Path = $GameCfg; Name = 'GameDVR_HonorUserFSEBehaviorMode'; Type = 'DWord'; Default = 0 }
+    @{ Path = $GameCfg; Name = 'GameDVR_DXGIHonorFSEWindowsCompatible'; Type = 'DWord'; Default = 0 }
+    @{ Path = 'HKCU:\Software\Microsoft\Windows\CurrentVersion\GameDVR'; Name = 'AppCaptureEnabled'; Type = 'DWord'; Default = $null }
+    @{ Path = 'HKCU:\Software\Microsoft\Windows\CurrentVersion\GameDVR'; Name = 'HistoricalCaptureEnabled'; Type = 'DWord'; Default = $null }
+    @{ Path = 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\GameDVR'; Name = 'AllowGameDVR'; Type = 'DWord'; Default = $null }
+    @{ Path = 'HKCU:\Software\Microsoft\GameBar'; Name = 'UseNexusForGameBarEnabled'; Type = 'DWord'; Default = $null }
+    # Frame Booster: Game Mode, GPU scheduling, windowed games, power throttling, timer
+    @{ Path = 'HKCU:\Software\Microsoft\GameBar'; Name = 'AutoGameModeEnabled'; Type = 'DWord'; Default = $null }
+    @{ Path = 'HKCU:\Software\Microsoft\GameBar'; Name = 'AllowAutoGameMode'; Type = 'DWord'; Default = $null }
+    @{ Path = 'HKLM:\SYSTEM\CurrentControlSet\Control\GraphicsDrivers'; Name = 'HwSchMode'; Type = 'DWord'; Default = $null }
+    @{ Path = 'HKCU:\Software\Microsoft\DirectX\UserGpuPreferences'; Name = 'DirectXUserGlobalSettings'; Type = 'String'; Default = $null }
+    @{ Path = 'HKLM:\SYSTEM\CurrentControlSet\Control\Power\PowerThrottling'; Name = 'PowerThrottlingOff'; Type = 'DWord'; Default = $null }
+    @{ Path = 'HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager\kernel'; Name = 'GlobalTimerResolutionRequests'; Type = 'DWord'; Default = $null }
+    # Gaming Boost [3] Remove Windows Delay, [4] CPU, [5] RAM (0x380000), [7] Mouse, Frame Booster
     @{ Path = $MM; Name = 'NetworkThrottlingIndex'; Type = 'DWord'; Default = 10 }
     @{ Path = $MM; Name = 'SystemResponsiveness'; Type = 'DWord'; Default = 20 }
     @{ Path = "$MM\Tasks\Games"; Name = 'GPU Priority'; Type = 'DWord'; Default = 8 }
+    @{ Path = "$MM\Tasks\Games"; Name = 'Priority'; Type = 'DWord'; Default = 2 }
+    @{ Path = "$MM\Tasks\Games"; Name = 'Scheduling Category'; Type = 'String'; Default = 'Medium' }
+    @{ Path = "$MM\Tasks\Games"; Name = 'SFIO Priority'; Type = 'String'; Default = 'Normal' }
     @{ Path = 'HKLM:\SYSTEM\ControlSet001\Control'; Name = 'SvcHostSplitThresholdInKB'; Type = 'DWord'; Default = 3670016 }
     @{ Path = 'HKLM:\SYSTEM\CurrentControlSet\Control'; Name = 'SvcHostSplitThresholdInKB'; Type = 'DWord'; Default = 3670016 }
     @{ Path = 'HKLM:\SOFTWARE\Microsoft\Input\Settings\ControllerProcessor\CursorSpeed'; Name = 'CursorSensitivity'; Type = 'DWord'; Default = 100 }
+    @{ Path = $Mouse; Name = 'MouseSpeed'; Type = 'String'; Default = '1' }
+    @{ Path = $Mouse; Name = 'MouseThreshold1'; Type = 'String'; Default = '6' }
+    @{ Path = $Mouse; Name = 'MouseThreshold2'; Type = 'String'; Default = '10' }
     # Gaming Boost [3] System Properties > Performance (visual effects, processor scheduling)
     @{ Path = 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\VisualEffects'; Name = 'VisualFXSetting'; Type = 'DWord'; Default = 0 }
     @{ Path = $Desktop; Name = 'UserPreferencesMask'; Type = 'Binary'; Default = [byte[]](0x9E, 0x1E, 0x07, 0x80, 0x12, 0x00, 0x00, 0x00) }
@@ -116,12 +140,12 @@ foreach ($n in 'DefaultTTL', 'Tcp1323Opts', 'TcpMaxDupAcks', 'SackOpts', 'MaxUse
 }
 foreach ($k in Get-ChildItem "$Tcp\Interfaces") {
     foreach ($n in 'TcpAckFrequency', 'TCPNoDelay', 'TcpDelAckTicks') {
-        $Reg += @{ Path = "$Tcp\Interfaces\$($k.PSChildName)"; Name = $n; Type = 'DWord'; Default = $null }
+        $Reg += @{ Path = "$Tcp\Interfaces\$($k.PSChildName)"; Name = $n; Type = 'DWord'; Default = $null; Dynamic = $true }
     }
 }
 # Gaming Boost [6] MSI Utility: interrupt priority
 foreach ($k in Get-ChildItem 'HKLM:\SYSTEM\CurrentControlSet\Enum\PCI' -Recurse | Where-Object { $_.PSChildName -eq 'Affinity Policy' }) {
-    $Reg += @{ Path = $k.PSPath -replace '^.*::HKEY_LOCAL_MACHINE', 'HKLM:'; Name = 'DevicePriority'; Type = 'DWord'; Default = $null }
+    $Reg += @{ Path = $k.PSPath -replace '^.*::HKEY_LOCAL_MACHINE', 'HKLM:'; Name = 'DevicePriority'; Type = 'DWord'; Default = $null; Dynamic = $true }
 }
 
 # Services the tool disables, with their fresh Windows start type
@@ -177,16 +201,34 @@ function Get-ActiveScheme {
     return $null
 }
 
+function Get-BackupEntry($i) {
+    $v = Get-RegValue $i.Path $i.Name
+    if ($v -is [byte[]]) { $v = [int[]]$v }
+    return [pscustomobject]@{ Path = $i.Path; Name = $i.Name; Exists = ($null -ne $v); Value = $v }
+}
+
 # ==========================================
 # BACKUP (this PC's own values, kept from the first run only)
 # ==========================================
 if ($Mode -eq 'Backup') {
-    if (Test-Path $BackupFile) { exit 0 }
-    $reg = foreach ($i in $Reg) {
-        $v = Get-RegValue $i.Path $i.Name
-        if ($v -is [byte[]]) { $v = [int[]]$v }
-        @{ Path = $i.Path; Name = $i.Name; Exists = ($null -ne $v); Value = $v }
+    if (Test-Path $BackupFile) {
+        # Backup from an older version: add the settings it does not have yet.
+        # The Launcher runs this before any tweak, so these are still the PC's
+        # own values. Per-device entries are left out: they may be tweaked.
+        $backup = Get-Content -Path $BackupFile -Raw | ConvertFrom-Json
+        if (-not $backup) { exit 0 }
+        $added = @(foreach ($i in $Reg) {
+            if ($i.Dynamic) { continue }
+            if ($backup.Registry | Where-Object { $_.Path -eq $i.Path -and $_.Name -eq $i.Name }) { continue }
+            Get-BackupEntry $i
+        })
+        if ($added.Count) {
+            $backup.Registry = @($backup.Registry) + $added
+            $backup | ConvertTo-Json -Depth 5 | Set-Content -Path $BackupFile -Encoding UTF8
+        }
+        exit 0
     }
+    $reg = foreach ($i in $Reg) { Get-BackupEntry $i }
     $svc = foreach ($s in $Services) { @{ Name = $s.Name; Start = (Get-StartType $s.Name) } }
     $backup = @{
         Created           = (Get-Date).ToString('yyyy-MM-dd HH:mm')
@@ -257,9 +299,9 @@ if ($backup -and $backup.PowerScheme) { $scheme = $backup.PowerScheme }
 if ($backup) {
     powercfg /setactive $scheme | Out-Null
     if ((Get-ActiveScheme) -ne $scheme) { powercfg /setactive $BalancedGuid | Out-Null }
-    # Remove the Ultimate Performance copies the tool added
+    # Remove the plans the tool added (GAMING TWEAKS Ultimate, Ultimate Performance copies)
     foreach ($line in (powercfg /list)) {
-        if ($line -match '([0-9a-fA-F-]{36}).*\((Ultimate Performance|Performances optimales)\)') {
+        if ($line -match '([0-9a-fA-F-]{36}).*\((GAMING TWEAKS[^)]*|Ultimate Performance|Performances optimales)\)') {
             $g = $Matches[1].ToLower()
             if ($g -ne $scheme) { powercfg /delete $g | Out-Null }
         }

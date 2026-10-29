@@ -1,6 +1,6 @@
 @echo off
 setlocal EnableDelayedExpansion
-title GAMING TWEAKS Launcher (beta 0.6.0)
+title GAMING TWEAKS Launcher (beta 0.7.0)
 color b
 
 :: ==========================================
@@ -8,6 +8,14 @@ color b
 :: ==========================================
 :: أهم سطر: كيخلي السكريبت يعرف بلي راه وسط المجلد المؤقت
 cd /d "%~dp0"
+
+:: Administrator rights: the tweaks write to HKLM, services and power plans
+fltmc >nul 2>&1 && goto IsAdmin
+echo.
+echo    Requesting Administrator rights...
+powershell -NoProfile -Command "Start-Process -FilePath '%~f0' -Verb RunAs" <nul
+exit /b
+:IsAdmin
 
 :: التحقق من وجود ملفات اللغة
 if not exist "Resources\Lang" (
@@ -27,7 +35,7 @@ if not exist "Resources\Lang" (
 cls
 echo.
 echo    ===============================================
-echo       GAMING TWEAKS Cloud (beta 0.6.0)
+echo       GAMING TWEAKS Cloud (beta 0.7.0)
 echo    ===============================================
 echo.
 echo    [1] English
@@ -59,13 +67,13 @@ goto LangMenu
 :RunScript
 cls
 echo.
-echo    [CLOUD] Initializing beta 0.6.0...
+echo    [CLOUD] Initializing beta 0.7.0...
 
 :: Backup ديال القيم الأصلية ديال البيسي (كيتدار غير أول مرة)
 powershell -NoProfile -ExecutionPolicy Bypass -File "Resources\Restore\GT_Restore.ps1" -Mode Backup <nul
 
 :: نقطة استعادة النظام
-powershell -NoProfile -ExecutionPolicy Bypass -Command "Checkpoint-Computer -Description 'GT beta 0.6.0 Cloud' -RestorePointType 'MODIFY_SETTINGS' -ErrorAction SilentlyContinue" <nul
+powershell -NoProfile -ExecutionPolicy Bypass -Command "Checkpoint-Computer -Description 'GT beta 0.7.0 Cloud' -RestorePointType 'MODIFY_SETTINGS' -ErrorAction SilentlyContinue" <nul
 
 :: تشغيل السكريبت النهائي
 if exist "Resources\Lang\%TARGET_SCRIPT%" (
