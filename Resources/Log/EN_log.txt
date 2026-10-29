@@ -1,3 +1,29 @@
+# Version beta-0.7.0
+
+### CHANGE LOG
+
+**[ NEW: FRAME BOOSTER ]**
+- **[5] in the Main Menu:** One click for max FPS (EN / FR). Safe and reversible.
+    - Power plan "GAMING TWEAKS Ultimate": CPU 100%, no core parking, no USB/PCIe sleep.
+    - Game Mode, Hardware-accelerated GPU scheduling, Optimizations for windowed games.
+    - Games get high CPU, GPU and disk priority (MMCSS), foreground boost, no power throttling.
+    - Background game recording off, precise game timer (Windows 11).
+- **Restore:** 000 and My PC Backup undo every Frame Booster tweak. Older PC backups get the new settings added automatically.
+
+**[ FIXES ]**
+- **FIXED:** MSI Utility, TCP Optimizer, Filter Keys Setter, info pictures and View Log did not open (%RES% was never set).
+- **FIXED:** Launcher now asks for Administrator rights by itself.
+- **FIXED:** Boost CPU set GPU Priority to 0 on Intel and limited the boot CPU count: now it gives games high priority.
+- **FIXED:** Boost RAM skipped PCs with 5-7 GB RAM: now it uses your exact RAM size.
+- **FIXED:** Disable FSO set the wrong value (0): FSO is really disabled now, and Game Bar too.
+- **FIXED:** "Disable Automatic App Updates" turned off all Windows Updates: now it only stops Microsoft Store app updates.
+- **FIXED:** "Prevent Apps Auto Starting" did the same as Background Apps: now it opens Startup Apps.
+- **FIXED:** Disable Spectre/Meltdown missed FeatureSettingsOverrideMask; it now warns and asks first.
+- **FIXED:** French menu was missing some tweaks of the English menu.
+- **NEW:** Restore options for Services and Memory Compression, mouse acceleration off, faster keyboard repeat.
+
+---
+
 # Version beta-0.6.0
 
 ### CHANGE LOG

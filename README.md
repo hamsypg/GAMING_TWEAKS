@@ -30,8 +30,9 @@
 ## ✨ Key Features
 | Category | Features |
 | :--- | :--- |
+| 🎯 **Frame Booster** | • One click Max FPS: Ultimate power plan, Game Mode, GPU scheduling<br>• Game priority (CPU, GPU, disk), no power throttling<br>• Safe & reversible: security and Windows Update are not touched |
 | 🎮 **Gaming** | • Disable Game DVR & FSO<br>• Boost GPU Priority<br>• Reduce Input Latency (Mouse/Keyboard) |
-| 🚀 **Performance** | • Smart RAM Optimization<br>• CPU Core Unparking (Smart Detect)<br>• Ultimate Power Plan |
+| 🚀 **Performance** | • Smart RAM Optimization<br>• CPU Core Unparking<br>• Ultimate Power Plan |
 | 🌐 **Network** | • Fix Network Spikes & Ping<br>• TCP Optimizer Integration<br>• Smart DNS Tester & Setter |
 | 🧹 **Maintenance** | • Deep Cache & Temp Cleaner<br>• Auto-Restore Point Creation<br>• Hard Drive Optimization |
 | ♻️ **Restore** | • 000: Fresh Windows Defaults (no backup needed)<br>• Automatic PC Backup & Restore |
@@ -44,7 +45,7 @@
 *Recommended for stability and full offline support.*
 1. Download the latest `.zip` file from [Releases](https://github.com/hamsypg/GAMING_TWEAKS/releases).
 2. Extract the folder to your Desktop.
-3. Run `Start_Tweaks.bat` as **Administrator**.
+3. Run `Launcher.bat` (it asks for **Administrator** rights by itself).
 
 ### Option 2: Cloud Mode ☁️ - **COMING SOON 🚧**
 *Lightweight version without installation.*
@@ -56,7 +57,7 @@
 ## ⚠️ Disclaimer
 > This tool modifies Windows Registry and System Services. A **System Restore Point** is created automatically before applying any tweaks. Use at your own risk.
 > To undo the tweaks, choose **[R] Restore Windows Defaults** in the main menu, then restart your PC:
-> - **[0] 000**: puts every setting the tool changes back to the fresh Windows default (no backup needed).
+> - **[0] 000**: puts every setting the tool changes (Frame Booster included) back to the fresh Windows default (no backup needed).
 > - **[1] My PC backup**: puts back this PC's own values, saved automatically before the first tweak.
 
 <br>

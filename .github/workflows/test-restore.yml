@@ -14,10 +14,13 @@ jobs:
       - name: Check PowerShell syntax
         shell: powershell
         run: |
-          $errors = $null
-          [System.Management.Automation.Language.Parser]::ParseFile("$PWD\Resources\Restore\GT_Restore.ps1", [ref]$null, [ref]$errors) | Out-Null
-          $errors
-          if ($errors.Count) { exit 1 }
+          $bad = 0
+          foreach ($f in 'Resources\Restore\GT_Restore.ps1', 'Resources\Scripts\GT_FrameBooster.ps1') {
+            $errors = $null
+            [System.Management.Automation.Language.Parser]::ParseFile("$PWD\$f", [ref]$null, [ref]$errors) | Out-Null
+            if ($errors.Count) { $f; $errors; $bad++ }
+          }
+          exit $bad
 
       - name: Fresh Windows values (before any tweak)
         shell: powershell
@@ -37,14 +40,33 @@ jobs:
         shell: powershell
         run: Get-Content "$env:ProgramData\GamingTweaks\pc_backup.json"
 
-      - name: Apply all tweaks
+      - name: A backup from an older version gets the new settings added
+        shell: powershell
+        run: |
+          $old = "$env:RUNNER_TEMP\old_backup.json"
+          $b = Get-Content "$env:ProgramData\GamingTweaks\pc_backup.json" -Raw | ConvertFrom-Json
+          $b.Registry = @($b.Registry | Where-Object { $_.Name -notin 'HwSchMode', 'AutoGameModeEnabled' })
+          $b | ConvertTo-Json -Depth 5 | Set-Content $old -Encoding UTF8
+          powershell -NoProfile -ExecutionPolicy Bypass -File Resources\Restore\GT_Restore.ps1 -Mode Backup -BackupFile $old
+          $n = @((Get-Content $old -Raw | ConvertFrom-Json).Registry | Where-Object { $_.Name -in 'HwSchMode', 'AutoGameModeEnabled' }).Count
+          "Entries added back: $n (expected 2)"
+          if ($n -ne 2) { exit 1 }
+
+      - name: Apply the legacy tweaks (TCP, bcdedit, Windows Update)
         shell: cmd
         timeout-minutes: 5
         run: call .github\tests\apply_tweaks.bat
 
-      - name: Show tweaked state
+      - name: "English menu: apply tweaks and Frame Booster"
+        shell: cmd
+        timeout-minutes: 5
+        run: |
+          cmd /c Resources\Lang\Core_EN.bat < .github\tests\menu_tweaks.txt
+          exit /b 0
+
+      - name: Verify the menu really applied the tweaks
         shell: powershell
-        run: .\.github\tests\verify_defaults.ps1; exit 0
+        run: .\.github\tests\verify_tweaked.ps1
 
       - name: "English menu: [R] > [0] 000 > Y"
         shell: cmd
@@ -67,7 +89,10 @@ jobs:
       - name: Apply all tweaks again
         shell: cmd
         timeout-minutes: 5
-        run: call .github\tests\apply_tweaks.bat >nul
+        run: |
+          call .github\tests\apply_tweaks.bat >nul
+          cmd /c Resources\Lang\Core_EN.bat < .github\tests\menu_tweaks.txt >nul
+          exit /b 0
 
       - name: "Restore my PC backup (French messages)"
         shell: cmd
@@ -79,3 +104,6 @@ jobs:
         run: |
           powershell -NoProfile -ExecutionPolicy Bypass -File Resources\Restore\GT_Restore.ps1 -Mode Backup -BackupFile "$env:RUNNER_TEMP\after.json"
           .\.github\tests\compare_backup.ps1 -Before "$env:ProgramData\GamingTweaks\pc_backup.json" -After "$env:RUNNER_TEMP\after.json"
+          $left = @(powercfg /list | Where-Object { $_ -match 'GAMING TWEAKS' }).Count
+          "GAMING TWEAKS plans left: $left (expected 0)"
+          if ($left) { exit 1 }

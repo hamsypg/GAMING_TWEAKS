@@ -1,6 +1,6 @@
 @echo off
-:: Applies the same system changes as Core_EN.bat (non-interactive) so the
-:: restore can be tested against a fully tweaked system.
+:: Applies the tweaks the menu test does not cover (older versions, TCP Optimizer,
+:: bcdedit) so the restore can be tested against a fully tweaked system.
 reg add HKLM\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU /v NoAutoUpdate /t reg_dword /d "1" /f
 reg add HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\DriverSearching /v SearchOrderConfig /t reg_dword /d "0" /f
 reg add HKCU\Software\Microsoft\Windows\CurrentVersion\BackgroundAccessApplications /v GlobalUserDisabled /t REG_DWORD /d 1 /f
