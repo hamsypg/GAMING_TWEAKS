@@ -2,7 +2,7 @@
 setlocal EnableExtensions
 :: دعم الحروف الفرنسية
 chcp 65001 >nul
-title GAMING TWEAKS beta 0.7.0 (Francais)
+title GAMING TWEAKS beta 0.6.5 (Francais)
 color b
 
 :: Dossier Resources (outils, images d'info, journal, scripts), trouve depuis le
@@ -13,7 +13,7 @@ set "PS=powershell -NoProfile -ExecutionPolicy Bypass"
 :frmain
 cls
 color b
-title GAMING TWEAKS beta 0.7.0 (Francais)
+title GAMING TWEAKS beta 0.6.5 (Francais)
 echo.
 echo                        MENU PRINCIPAL
 echo.

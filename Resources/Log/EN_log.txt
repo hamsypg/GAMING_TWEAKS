@@ -1,4 +1,4 @@
-# Version beta-0.7.0
+# Version beta-0.6.5
 
 ### CHANGE LOG
 

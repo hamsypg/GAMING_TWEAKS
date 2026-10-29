@@ -70,7 +70,7 @@ $SvcProv  = 'HKLM:\SYSTEM\CurrentControlSet\Services\Tcpip\ServiceProvider'
 $GameCfg  = 'HKCU:\System\GameConfigStore'
 $Mouse    = 'HKCU:\Control Panel\Mouse'
 $Reg = @(
-    # Optimize Windows [2] [3] [4] [6] [7] (NoAutoUpdate: set by versions before beta 0.7.0)
+    # Optimize Windows [2] [3] [4] [6] [7] (NoAutoUpdate: set by versions before beta 0.6.5)
     @{ Path = 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU'; Name = 'NoAutoUpdate'; Type = 'DWord'; Default = $null }
     @{ Path = 'HKLM:\SOFTWARE\Policies\Microsoft\WindowsStore'; Name = 'AutoDownload'; Type = 'DWord'; Default = $null }
     @{ Path = 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\DriverSearching'; Name = 'SearchOrderConfig'; Type = 'DWord'; Default = 1 }
