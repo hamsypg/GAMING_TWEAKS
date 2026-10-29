@@ -69,13 +69,10 @@ jobs:
         timeout-minutes: 5
         run: call .github\tests\apply_tweaks.bat >nul
 
-      - name: "French menu: [R] > [1] PC backup > O"
+      - name: "Restore my PC backup (French messages)"
         shell: cmd
         timeout-minutes: 5
-        run: |
-          (echo R& echo 1& echo O& echo.& echo X)> "%RUNNER_TEMP%\in.txt"
-          cmd /c Resources\Lang\Core_FR.bat < "%RUNNER_TEMP%\in.txt"
-          exit /b 0
+        run: powershell -NoProfile -ExecutionPolicy Bypass -File Resources\Restore\GT_Restore.ps1 -Mode PCBackup -Lang FR <nul
 
       - name: Verify the PC is back to its backup
         shell: powershell
