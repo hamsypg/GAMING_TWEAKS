@@ -1,6 +1,6 @@
 @echo off
 setlocal EnableExtensions
-title GAMING TWEAKS beta 0.7.0 (English)
+title GAMING TWEAKS beta 0.6.5 (English)
 color b
 
 :: Resources folder (tools, info pictures, log, scripts), found from this file's
@@ -11,7 +11,7 @@ set "PS=powershell -NoProfile -ExecutionPolicy Bypass"
 :enmain
 cls
 color b
-title GAMING TWEAKS beta 0.7.0 (English)
+title GAMING TWEAKS beta 0.6.5 (English)
 echo.
 echo                        MAIN MENU
 echo.
