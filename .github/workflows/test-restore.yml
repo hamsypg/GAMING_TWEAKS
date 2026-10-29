@@ -1,0 +1,45 @@
+name: Test Restore Windows Defaults
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  restore:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check PowerShell syntax
+        shell: powershell
+        run: |
+          $errors = $null
+          [System.Management.Automation.Language.Parser]::ParseFile("$PWD\Resources\Restore\GT_Restore.ps1", [ref]$null, [ref]$errors) | Out-Null
+          $errors
+          if ($errors.Count) { exit 1 }
+
+      - name: Apply all tweaks
+        shell: cmd
+        run: call .github\tests\apply_tweaks.bat
+
+      - name: Show tweaked state
+        shell: powershell
+        run: .\.github\tests\verify_defaults.ps1; exit 0
+
+      - name: Restore from the English menu ([R], Y, then X to exit)
+        shell: cmd
+        run: (echo R& echo Y& echo.& echo X) | cmd /c Resources\Lang\Core_EN.bat
+
+      - name: Verify Windows defaults
+        shell: powershell
+        run: .\.github\tests\verify_defaults.ps1
+
+      - name: Restore again from the French menu ([R], O)
+        shell: cmd
+        run: |
+          call .github\tests\apply_tweaks.bat >nul
+          (echo R& echo O& echo.& echo X) | cmd /c Resources\Lang\Core_FR.bat
+
+      - name: Verify Windows defaults (French run)
+        shell: powershell
+        run: .\.github\tests\verify_defaults.ps1
