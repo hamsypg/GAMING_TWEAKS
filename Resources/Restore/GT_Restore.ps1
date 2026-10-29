@@ -226,6 +226,12 @@ foreach ($i in $Reg) {
 }
 Write-Host "[OK] $($T.Registry)"
 
+# Memory compression (fresh Windows: enabled). Done before the services:
+# Enable-MMAgent turns SysMain back on, which would undo a SysMain restore.
+if ($backup -and $backup.MemoryCompression -eq $false) { Disable-MMAgent -MemoryCompression }
+else { Enable-MMAgent -MemoryCompression }
+Write-Host "[OK] $($T.MemComp)"
+
 # Services
 foreach ($s in $Services) {
     if ($null -eq (Get-StartType $s.Name)) { continue }
@@ -238,11 +244,6 @@ foreach ($s in $Services) {
     if ($start -like '*auto') { Start-Service -Name $s.Name }
 }
 Write-Host "[OK] $($T.Services)"
-
-# Memory compression (fresh Windows: enabled)
-if ($backup -and $backup.MemoryCompression -eq $false) { Disable-MMAgent -MemoryCompression }
-else { Enable-MMAgent -MemoryCompression }
-Write-Host "[OK] $($T.MemComp)"
 
 # Boot: numproc (fresh Windows: not set)
 if ($backup -and $backup.NumProc) { bcdedit /set '{current}' numproc $backup.NumProc | Out-Null }
