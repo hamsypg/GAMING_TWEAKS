@@ -1,7 +1,7 @@
 @echo off
 :: دعم الحروف الفرنسية
 chcp 65001 >nul
-title GAMING TWEAKS v0.5.7 (Francais)
+title GAMING TWEAKS beta 0.6.0 (Francais)
 cls
 color b
 

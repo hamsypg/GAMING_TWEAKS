@@ -15,7 +15,7 @@
   </p>
 
   <p>
-    <a href="https://github.com/hamsypg/GAMING_TWEAKS/releases/latest/download/GAMING.TWEAKS.by.HAMSYPG.beta.v0.5.7.rar">
+    <a href="https://github.com/hamsypg/GAMING_TWEAKS/releases/latest">
       <img src="https://img.shields.io/badge/DOWNLOAD%20NOW-Click%20Here-success?style=for-the-badge&logo=windows&logoColor=white" alt="Download">
     </a>
   </p>
@@ -34,6 +34,7 @@
 | 🚀 **Performance** | • Smart RAM Optimization<br>• CPU Core Unparking (Smart Detect)<br>• Ultimate Power Plan |
 | 🌐 **Network** | • Fix Network Spikes & Ping<br>• TCP Optimizer Integration<br>• Smart DNS Tester & Setter |
 | 🧹 **Maintenance** | • Deep Cache & Temp Cleaner<br>• Auto-Restore Point Creation<br>• Hard Drive Optimization |
+| ♻️ **Restore** | • 000: Fresh Windows Defaults (no backup needed)<br>• Automatic PC Backup & Restore |
 
 <br>
 

@@ -1,5 +1,5 @@
 @echo off
-title GAMING TWEAKS v0.5.7 (English)
+title GAMING TWEAKS beta 0.6.0 (English)
 cls
 color b
 

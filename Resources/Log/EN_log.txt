@@ -1,3 +1,16 @@
+# Version beta-0.6.0
+
+### CHANGE LOG
+
+**[ NEW: RESTORE WINDOWS DEFAULTS ]**
+- **[R] in the Main Menu:** Undo every tweak of the tool (EN / FR).
+    - **[0] 000:** Fresh Windows 10/11 default values. No backup needed.
+    - **[1] My PC Backup:** Your original values, saved by the Launcher before the first tweak.
+- **Covers:** Registry, Services, Memory Compression, CPU Cores (bcdedit), Power Plans, Firewall rule, TCP/IP & Winsock, Visual Effects, Filter Keys, MSI priority.
+- **Note:** Restart after a Restore. MSI mode is not reverted (reinstall the GPU driver).
+
+---
+
 # Version beta-0.5.7 (Dual Edition)
 
 ### CHANGE LOG
