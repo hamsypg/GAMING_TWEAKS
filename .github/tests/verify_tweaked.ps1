@@ -41,7 +41,7 @@ Check 'AutoGameModeEnabled'         (Reg 'HKCU:\Software\Microsoft\GameBar' 'Aut
 Check 'HwSchMode'                   (Reg 'HKLM:\SYSTEM\CurrentControlSet\Control\GraphicsDrivers' 'HwSchMode') 2
 Check 'Windowed games'              ((Reg 'HKCU:\Software\Microsoft\DirectX\UserGpuPreferences' 'DirectXUserGlobalSettings') -like '*SwapEffectUpgradeEnable=1;*') 'True'
 Check 'SystemResponsiveness'        (Reg $mm 'SystemResponsiveness') 10
-Check 'NetworkThrottlingIndex'      (Reg $mm 'NetworkThrottlingIndex') -1
+Check 'NetworkThrottlingIndex'      (Reg $mm 'NetworkThrottlingIndex') 4294967295
 Check 'PowerThrottlingOff'          (Reg 'HKLM:\SYSTEM\CurrentControlSet\Control\Power\PowerThrottling' 'PowerThrottlingOff') 1
 Check 'GameDVR_Enabled'             (Reg $gc 'GameDVR_Enabled') 0
 Check 'AppCaptureEnabled'           (Reg 'HKCU:\Software\Microsoft\Windows\CurrentVersion\GameDVR' 'AppCaptureEnabled') 0

@@ -57,6 +57,8 @@ jobs:
         timeout-minutes: 5
         run: call .github\tests\apply_tweaks.bat
 
+      # pause reads one character: menu_tweaks.txt has a "." line after each
+      # pause, so the next menu reads an empty line and not a broken one.
       - name: "English menu: apply tweaks and Frame Booster"
         shell: cmd
         timeout-minutes: 5
@@ -72,7 +74,7 @@ jobs:
         shell: cmd
         timeout-minutes: 5
         run: |
-          (echo R& echo 0& echo Y& echo.& echo X)> "%RUNNER_TEMP%\in.txt"
+          (echo R& echo 0& echo Y& echo .& echo X)> "%RUNNER_TEMP%\in.txt"
           cmd /c Resources\Lang\Core_EN.bat < "%RUNNER_TEMP%\in.txt"
           exit /b 0
 
