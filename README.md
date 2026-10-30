@@ -39,6 +39,10 @@
 
 <br>
 
+## 🕹️ Interface
+- Move with **↑ ↓** and press **Enter**, or just press the item's key (**1**, **2**, **R**...). No typing.
+- **Esc** goes back. English / Français.
+
 ## 📥 Installation & Usage
 
 ### Option 1: Local Mode (Offline) 📦 - **AVAILABLE NOW**
@@ -66,4 +70,8 @@
   <h3>🔗 Connect with HAMSYPG</h3>
   <a href="https://instagram.com/hamsypg"><img src="https://img.shields.io/badge/Instagram-E4405F?style=for-the-badge&logo=instagram&logoColor=white"></a>
   <a href="https://youtube.com/@hamsypg"><img src="https://img.shields.io/badge/YouTube-FF0000?style=for-the-badge&logo=youtube&logoColor=white"></a>
+</div>
+
+<div align="center">
+  <sub>Copyright © 2024-2026 HAMSYPG - HamzaPG. All rights reserved. Licensed under the Apache License 2.0.</sub>
 </div>

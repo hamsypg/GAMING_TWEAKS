@@ -1,12 +1,17 @@
 @echo off
-setlocal EnableDelayedExpansion
-title GAMING TWEAKS Launcher (beta 0.6.5)
-color b
+:: ==========================================
+:: GAMING TWEAKS by HAMSYPG - Launcher
+:: Copyright (c) 2024-2026 HAMSYPG - HamzaPG. All rights reserved.
+:: Licensed under the Apache License 2.0 (see LICENSE).
+:: ==========================================
+setlocal
+title GAMING TWEAKS (beta 0.6.5)
+color 0b
 
 :: ==========================================
 :: 1. SETUP PATHS (إعداد المسارات)
 :: ==========================================
-:: أهم سطر: كيخلي السكريبت يعرف بلي راه وسط المجلد المؤقت
+:: أهم سطر: كيخلي السكريبت يعرف بلي راه وسط المجلد ديالو
 cd /d "%~dp0"
 
 :: Administrator rights: the tweaks write to HKLM, services and power plans
@@ -17,71 +22,32 @@ powershell -NoProfile -Command "Start-Process -FilePath '%~f0' -Verb RunAs" <nul
 exit /b
 :IsAdmin
 
-:: التحقق من وجود ملفات اللغة
-if not exist "Resources\Lang" (
-    cls
-    color c
-    echo.
-    echo [ERROR] Resources folder missing!
-    echo Current Path: %CD%
-    pause
-    exit
-)
+:: التحقق من وجود الملفات
+if exist "Resources\GamingTweaks.ps1" goto Start
+color 0c
+echo.
+echo    [ERROR] Resources folder missing! Extract the whole zip first.
+echo    Current Path: %CD%
+pause
+exit /b 1
 
 :: ==========================================
-:: 2. MENU (القائمة)
+:: 2. START (التشغيل)
 :: ==========================================
-:LangMenu
+:Start
 cls
 echo.
-echo    ===============================================
-echo       GAMING TWEAKS Cloud (beta 0.6.5)
-echo    ===============================================
+echo    GAMING TWEAKS by HAMSYPG  -  beta 0.6.5
+echo    Copyright (c) 2024-2026 HAMSYPG - HamzaPG. All rights reserved.
 echo.
-echo    [1] English
-echo    [2] Francais
-echo.
-echo    [X] Exit
-echo.
-set /p "lang_choice=Choice: "
-
-if /i "%lang_choice%"=="X" exit
-
-:: هنا كان المشكل، دابا مصلح باستعمال الأقواس
-if "%lang_choice%"=="1" (
-    set "TARGET_SCRIPT=Core_EN.bat"
-    goto RunScript
-)
-
-if "%lang_choice%"=="2" (
-    set "TARGET_SCRIPT=Core_FR.bat"
-    goto RunScript
-)
-
-:: إلا كتب شي حاجة غالطة يرجع
-goto LangMenu
-
-:: ==========================================
-:: 3. EXECUTE (التشغيل)
-:: ==========================================
-:RunScript
-cls
-echo.
-echo    [CLOUD] Initializing beta 0.6.5...
+echo    Preparing...
 
 :: Backup ديال القيم الأصلية ديال البيسي (كيتدار غير أول مرة)
 powershell -NoProfile -ExecutionPolicy Bypass -File "Resources\Restore\GT_Restore.ps1" -Mode Backup <nul
 
 :: نقطة استعادة النظام
-powershell -NoProfile -ExecutionPolicy Bypass -Command "Checkpoint-Computer -Description 'GT beta 0.6.5 Cloud' -RestorePointType 'MODIFY_SETTINGS' -ErrorAction SilentlyContinue" <nul
+powershell -NoProfile -ExecutionPolicy Bypass -Command "Checkpoint-Computer -Description 'GAMING TWEAKS beta 0.6.5' -RestorePointType 'MODIFY_SETTINGS' -ErrorAction SilentlyContinue" <nul
 
-:: تشغيل السكريبت النهائي
-if exist "Resources\Lang\%TARGET_SCRIPT%" (
-    call "Resources\Lang\%TARGET_SCRIPT%"
-) else (
-    color c
-    echo.
-    echo [ERROR] Script not found: Resources\Lang\%TARGET_SCRIPT%
-    pause
-)
-exit
+:: الواجهة (PowerShell): القوائم كتخدم بالفلاش و بالضغط على حرف واحد
+powershell -NoProfile -ExecutionPolicy Bypass -File "Resources\GamingTweaks.ps1"
+exit /b 0

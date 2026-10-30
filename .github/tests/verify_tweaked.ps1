@@ -1,4 +1,4 @@
-# Checks that the EN menu (menu_tweaks.txt) and Frame Booster really applied their tweaks.
+# Checks that the EN menu (menu_keys.txt) and Frame Booster really applied their tweaks.
 $fail = 0
 function Check($What, $Actual, $Expected) {
     $ok = "$Actual" -eq "$Expected"
