@@ -2,6 +2,12 @@
 
 ### CHANGE LOG
 
+**[ NEW: OFFICIAL INTERFACE ]**
+- **New Menus (PowerShell):** Move with the arrow keys and press Enter, or press the item's key. No more typing + Enter.
+- **Official Look:** Framed header with version, highlighted selection, key hints, and copyright notice on every screen.
+- **One Engine:** All tweaks now run in `Resources\GamingTweaks.ps1` (EN / FR text in `Resources\Lang\*.psd1`). `Launcher.bat` asks for Administrator rights, saves the PC backup and starts it.
+- **Language:** chosen in the new menu (English / Francais), French text now with accents.
+
 **[ NEW: FRAME BOOSTER ]**
 - **[5] in the Main Menu:** One click for max FPS (EN / FR). Safe and reversible.
     - Power plan "GAMING TWEAKS Ultimate": CPU 100%, no core parking, no USB/PCIe sleep.
