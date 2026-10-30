@@ -23,7 +23,7 @@ $W = 66
 $Frame = 'DarkCyan'
 $C = @{
     TL = [char]0x2554; TR = [char]0x2557; BL = [char]0x255A; BR = [char]0x255D
-    H = [char]0x2550; V = [char]0x2551; ML = [char]0x255F; MR = [char]0x2562; h = [char]0x2500
+    H = [char]0x2550; V = [char]0x2551; ML = [char]0x255F; MR = [char]0x2562; Thin = [char]0x2500
     Dot = [char]0x2022; Arrow = [char]0x25BA
 }
 
@@ -52,13 +52,13 @@ function Show-Header([string]$Title) {
     Write-Row "by HAMSYPG  $($C.Dot)  $Version" 'DarkGray' -Center
     Write-Row $S.Tagline 'DarkGray' -Center
     Write-Row ''
-    Write-Edge $C.ML $C.h $C.MR
+    Write-Edge $C.ML $C.Thin $C.MR
     Write-Row $Title 'White' -Center
-    Write-Edge $C.ML $C.h $C.MR
+    Write-Edge $C.ML $C.Thin $C.MR
 }
 
 function Show-Footer {
-    Write-Edge $C.ML $C.h $C.MR
+    Write-Edge $C.ML $C.Thin $C.MR
     Write-Row $S.Hints 'DarkGray' -Center
     Write-Edge $C.BL $C.H $C.BR
     Write-Host ('  ' + $S.Rights) -ForegroundColor DarkGray
